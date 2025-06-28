@@ -9,7 +9,7 @@ on:
     branches: [main]
 
 jobs:
-  test-and-fix:
+  test-and-format:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,7 +22,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
             libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-            libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+            libncurses5-dev libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
       - name: Install pyenv and Python versions
         shell: bash
@@ -34,19 +34,32 @@ jobs:
           eval "$(pyenv init -)"
           eval "$(pyenv virtualenv-init -)"
 
-          pyenv install --skip-existing 3.5.10
-          pyenv install --skip-existing 3.6.15
-          pyenv install --skip-existing 3.7.17
-          pyenv install --skip-existing 3.8.19
-          pyenv install --skip-existing 3.9.19
-          pyenv install --skip-existing 3.10.14
-          pyenv install --skip-existing 3.11.9
-          pyenv install --skip-existing 3.12.3
-          pyenv install --skip-existing 3.13.0b1
+          echo "Now installing Python 3"
+          pyenv install --skip-existing 3
+          echo "Now installing Python 3.5"
+          pyenv install --skip-existing 3.5
+          echo "Now installing Python 3.6"
+          pyenv install --skip-existing 3.6
+          echo "Now installing Python 3.7"
+          pyenv install --skip-existing 3.7
+          echo "Now installing Python 3.8"
+          pyenv install --skip-existing 3.8
+          echo "Now installing Python 3.9"
+          pyenv install --skip-existing 3.9
+          echo "Now installing Python 3.10"
+          pyenv install --skip-existing 3.10
+          echo "Now installing Python 3.11"
+          pyenv install --skip-existing 3.11
+          echo "Now installing Python 3.12"
+          pyenv install --skip-existing 3.12
+          echo "Now installing Python 3.13"
+          pyenv install --skip-existing 3.13
+          echo "Now installing Python 3.14-dev"
           pyenv install --skip-existing 3.14-dev || true
+          echo "Now installing Python 3.15-dev"
           pyenv install --skip-existing 3.15-dev || true
 
-          pyenv global 3.12.3
+          pyenv global 3.12
 
           echo "PYENV_ROOT=$PYENV_ROOT" >> $GITHUB_ENV
           echo "PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> $GITHUB_ENV
