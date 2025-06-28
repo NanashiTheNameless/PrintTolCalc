@@ -1,6 +1,7 @@
 name: Test with tox on all supported Python versions
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
 
@@ -63,6 +64,7 @@ jobs:
       - name: Create PR for formatting fixes
         uses: peter-evans/create-pull-request@a59c52d55daab9f6a666e8741848b3cf101395a7
         with:
+          token: ${{ secrets.PAT }}
           commit-message: Auto-format code using tox.
           branch: fix-format-${{ steps.vars.outputs.sha_short }}
           title: Auto-format code using tox.
