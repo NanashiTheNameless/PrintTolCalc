@@ -3,6 +3,7 @@ from unittest import mock
 from PrintTolCalc import cli
 import pytest
 
+
 def test_cli_runs_without_error(capsys):
     test_args = ["prog", "--help"]
     with mock.patch.object(sys, "argv", test_args):
@@ -11,6 +12,7 @@ def test_cli_runs_without_error(capsys):
         assert e.value.code == 0
         out = capsys.readouterr().out
         assert "usage" in out.lower()
+
 
 def test_cli_version_output(capsys):
     test_args = ["prog", "--version"]
