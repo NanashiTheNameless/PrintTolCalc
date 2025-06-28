@@ -1,28 +1,54 @@
-def calculate_tolerance(ideal, measured):
-    signed = ((measured - ideal) / ideal) * 100
-    absolute = abs(signed)
-    return signed, absolute
+import argparse
+from .tolerance import calculate_tolerance
 
+def prompt_for_dimensions(label):
+    print(f"\nEnter {label} dimensions (in mm):")
+    x = float(input("  X: "))
+    y = float(input("  Y: "))
+    z = float(input("  Z: "))
+    return (x, y, z)
 
 def main():
-    print("3D Print Tolerance:")
-    try:
-        ideal_x = float(input("Ideal X dimension (mm): "))
-        ideal_y = float(input("Ideal Y dimension (mm): "))
-        ideal_z = float(input("Ideal Z dimension (mm): "))
-        measured_x = float(input("Measured X dimension (mm): "))
-        measured_y = float(input("Measured Y dimension (mm): "))
-        measured_z = float(input("Measured Z dimension (mm): "))
-        results = {
-            "X": calculate_tolerance(ideal_x, measured_x),
-            "Y": calculate_tolerance(ideal_y, measured_y),
-            "Z": calculate_tolerance(ideal_z, measured_z),
-        }
-        print("\nTolerance Results:")
-        for axis, (signed, absolute) in results.items():
-            print(f"{axis}-axis: Signed = {signed:+.3f}%, Absolute = {absolute:.3f}%")
-    except ValueError:
-        print("Invalid input. Only numeric values are allowed.")
+    parser = argparse.ArgumentParser(
+        description="PrintTolTest - Calculate 3D print dimensional tolerance.",
+        epilog="""
+Examples:
+  PrintTolTest
+    → Interactive mode, will prompt for expected/measured dimensions.
+
+  PrintTolTest --expected 20 20 20 --measured 19.99 19.95 20.10
+    → Command-line mode, pass dimensions directly.
+
+All dimensions must be in millimeters (mm).
+""",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    parser.add_argument('--expected', type=float, nargs=3, metavar=('X', 'Y', 'Z'),
+                        help='Expected dimensions in mm (e.g. --expected 20 20 20)')
+    parser.add_argument('--measured', type=float, nargs=3, metavar=('X', 'Y', 'Z'),
+                        help='Measured dimensions in mm (e.g. --measured 19.99 19.95 20.10)')
+
+    args = parser.parse_args()
+
+    expected = args.expected if args.expected else prompt_for_dimensions("expected")
+    measured = args.measured if args.measured else prompt_for_dimensions("measured")
+
+    tolerances = calculate_tolerance(expected, measured)
+
+    print("\n3D Print Tolerance Report:")
+    print(f"Ideal X dimension (mm): {expected[0]:.2f}")
+    print(f"Ideal Y dimension (mm): {expected[1]:.2f}")
+    print(f"Ideal Z dimension (mm): {expected[2]:.2f}")
+    print(f"Measured X dimension (mm): {measured[0]:.2f}")
+    print(f"Measured Y dimension (mm): {measured[1]:.2f}")
+    print(f"Measured Z dimension (mm): {measured[2]:.2f}")
+    print("\nTolerance Results:")
+    for axis in ['X', 'Y', 'Z']:
+        signed = tolerances[axis]['signed']
+        absolute = tolerances[axis]['absolute']
+        sign_prefix = '+' if signed > 0 else ''
+        print(f"{axis}-axis: Signed = {sign_prefix}{signed:.3f}%, Absolute = {absolute:.3f}%")
 
 if __name__ == "__main__":
     main()
