@@ -1,8 +1,6 @@
 # PrintTolTest
 
-Simple command-line utility to convert CSV files to searchable and
-sortable HTML table. Supports large datasets and horizontal scrolling
-for large number of columns.
+A simple CLI tool to calculate 3D print dimensional tolerance.
 
 ## Installation
 
