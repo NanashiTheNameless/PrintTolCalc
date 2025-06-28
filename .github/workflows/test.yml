@@ -1,0 +1,96 @@
+name: Test with tox on all Python versions and fix formatting if needed
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-and-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+        with:
+          fetch-depth: 0
+
+      - name: Install pyenv dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+            libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+            libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+      - name: Install pyenv and Python versions
+        run: |
+          curl https://pyenv.run | bash
+
+          echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $GITHUB_ENV
+          echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $GITHUB_ENV
+          echo 'eval "$(pyenv init --path)"' >> $GITHUB_ENV
+          echo 'eval "$(pyenv virtualenv-init -)"' >> $GITHUB_ENV
+
+      - name: Initialize pyenv and install Python versions
+        shell: bash
+        run: |
+          export PYENV_ROOT="$HOME/.pyenv"
+          export PATH="$PYENV_ROOT/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv virtualenv-init -)"
+
+          pyenv install --skip-existing 3.0.1
+          pyenv install --skip-existing 3.1.5
+          pyenv install --skip-existing 3.2.6
+          pyenv install --skip-existing 3.3.7
+          pyenv install --skip-existing 3.4.10
+          pyenv install --skip-existing 3.5.10
+          pyenv install --skip-existing 3.6.15
+          pyenv install --skip-existing 3.7.17
+          pyenv install --skip-existing 3.8.19
+          pyenv install --skip-existing 3.9.19
+          pyenv install --skip-existing 3.10.14
+          pyenv install --skip-existing 3.11.9
+          pyenv install --skip-existing 3.12.3
+          pyenv install --skip-existing 3.13.0b1
+          pyenv install --skip-existing 3.14-dev || true
+          pyenv install --skip-existing 3.15-dev || true
+
+          pyenv global 3.12.3
+
+      - name: Install tox
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox
+
+      - name: Run tox
+        env:
+          PYENV_ROOT: ${{ env.PYENV_ROOT }}
+          PATH: ${{ env.PYENV_ROOT }}/shims:${{ env.PYENV_ROOT }}/bin:${{ env.PATH }}
+        run: |
+          tox
+
+      - name: Check for formatting changes
+        id: format_changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git diff --quiet; then
+            echo "CHANGES=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No formatting changes."
+          fi
+
+      - name: Create PR for formatting fixes
+        if: steps.format_changes.outputs.CHANGES == 'true'
+        run: |
+          BRANCH=fix/format-$(date +%s)
+          git checkout -b "$BRANCH"
+          git add .
+          git commit -m "Auto-format code using tox"
+          git push origin "$BRANCH"
+
+          gh pr create --title "Auto-format code using tox" \
+                       --body "This PR applies formatting fixes from tox." \
+                       --base main --head "$BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

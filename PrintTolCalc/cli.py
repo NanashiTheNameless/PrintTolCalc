@@ -55,12 +55,8 @@ All dimensions must be in millimeters (mm).
 
     args = parser.parse_args()
 
-    expected = (
-        args.expected if args.expected else prompt_for_dimensions("expected")
-    )
-    measured = (
-        args.measured if args.measured else prompt_for_dimensions("measured")
-    )
+    expected = args.expected if args.expected else prompt_for_dimensions("expected")
+    measured = args.measured if args.measured else prompt_for_dimensions("measured")
 
     tolerances = calculate_tolerance(expected, measured)
 
