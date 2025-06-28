@@ -1,5 +1,7 @@
 # PrintTolCalc
 
+(<ins>**Print**</ins> <ins>**Tol**</ins>erance <ins>**Calc**</ins>ulator)
+
 A simple CLI tool to calculate 3D print dimensional tolerance.
 
 It is worthy to note this is more for testing your print consistency (and lets be honest, even more-so bragging).
