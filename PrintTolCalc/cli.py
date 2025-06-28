@@ -22,7 +22,7 @@ def prompt_for_dimensions(label):
 
 def main():
     parser = argparse.ArgumentParser(
-        description=f"PrintTolCalc {__version__} - Calculate 3D print dimensional tolerance.",
+        description=f"PrintTolCalc CLI {__version__} - Calculate 3D print dimensional tolerance.",
         epilog=f"""
 Examples:
   PrintTolCalc
@@ -36,7 +36,7 @@ All dimensions must be in millimeters (mm).
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
-        "--version", action="version", version=f"%(prog)s {__version__}"
+        "--version", action="version", version=f"PrintTolCalc {__version__}"
     )
     parser.add_argument(
         "--expected",
