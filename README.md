@@ -40,7 +40,7 @@ PrintTolCalc --expected X Y Z --measured X Y Z
 ### Standalone
 
 If you would prefer not to instal it and just use it directly there is also a standalone version avalible!
-[PrintTolCalc.Standalone.py](<PrintTolCalc.Standalone.py>)
+[PrintTolCalc.Standalone.py](<https://github.com/NanashiTheNameless/PrintTolCalc/raw/refs/heads/main/PrintTolCalc.Standalone.py>)
 
 Just replace `PrintTolCalc` with `PrintTolCalc.Standalone.py` when you go to use it!
 
@@ -50,6 +50,6 @@ PrintTolCalc.Standalone.py
 
 ## Credits
 
-[All Major Contributors](<CONTRIBUTORS.md>)
+[All Major Contributors](<https://github.com/NanashiTheNameless/PrintTolCalc/blob/main/CONTRIBUTORS.md>)
 
 [All Other Contributors](<https://github.com/NanashiTheNameless/PrintTolCalc/graphs/contributors>)
