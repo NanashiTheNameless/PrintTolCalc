@@ -1,4 +1,4 @@
-name: Test with tox on all Python versions and fix formatting if needed
+name: Test with tox on all supported Python versions
 
 on:
   push:
@@ -21,20 +21,13 @@ jobs:
             libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
       - name: Install pyenv and Python versions
+        shell: bash
         run: |
           curl https://pyenv.run | bash
 
-          echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $GITHUB_ENV
-          echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $GITHUB_ENV
-          echo 'eval "$(pyenv init --path)"' >> $GITHUB_ENV
-          echo 'eval "$(pyenv virtualenv-init -)"' >> $GITHUB_ENV
-
-      - name: Initialize pyenv and install Python versions
-        shell: bash
-        run: |
           export PYENV_ROOT="$HOME/.pyenv"
           export PATH="$PYENV_ROOT/bin:$PATH"
-          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
           eval "$(pyenv virtualenv-init -)"
 
           pyenv install --skip-existing 3.0.1
@@ -55,6 +48,9 @@ jobs:
           pyenv install --skip-existing 3.15-dev || true
 
           pyenv global 3.12.3
+
+          echo "PYENV_ROOT=$PYENV_ROOT" >> $GITHUB_ENV
+          echo "PATH=$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH" >> $GITHUB_ENV
 
       - name: Install tox
         run: |
