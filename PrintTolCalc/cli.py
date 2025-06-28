@@ -14,9 +14,9 @@ except PackageNotFoundError:
 
 def prompt_for_dimensions(label):
     print(f"\nEnter {label} dimensions (in mm):")
-    x = float(input("  X: "))
-    y = float(input("  Y: "))
-    z = float(input("  Z: "))
+    x = float(input(" X: "))
+    y = float(input(" Y: "))
+    z = float(input(" Z: "))
     return (x, y, z)
 
 
@@ -75,7 +75,6 @@ All dimensions must be in millimeters (mm).
         print(
             f"{axis}-axis: Signed = {sign_prefix}{signed:.3f}%, Absolute = {absolute:.3f}%"
         )
-
 
 if __name__ == "__main__":
     main()
