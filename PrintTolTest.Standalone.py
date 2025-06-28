@@ -41,7 +41,6 @@ Examples:
     → Command-line mode, pass dimensions directly.
 
 All dimensions must be in millimeters (mm).
-Version: {__version__}
 """,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
