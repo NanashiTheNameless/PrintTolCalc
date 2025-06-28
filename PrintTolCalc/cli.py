@@ -23,7 +23,7 @@ def prompt_for_dimensions(label):
 def main():
     parser = argparse.ArgumentParser(
         description=f"PrintTolCalc CLI {__version__} - Calculate 3D print dimensional tolerance.",
-        epilog=f"""
+        epilog="""
 Examples:
   PrintTolCalc
     → Interactive mode, will prompt for expected/measured dimensions.
