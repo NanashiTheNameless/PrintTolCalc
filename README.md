@@ -37,6 +37,17 @@ PrintTolTest --expected X Y Z
 PrintTolTest --expected X Y Z --measured X Y Z
 ```
 
+### Standalone
+
+If you would prefer not to instal it and just use it directly there is also a standalone version avalible!
+[PrintTolTest.Standalone.py](<PrintTolTest.Standalone.py>)
+
+Just replace `PrintTolTest` with `PrintTolTest.Standalone.py` when you go to use it!
+
+```sh
+PrintTolTest.Standalone.py
+```
+
 ## Credits
 
 [All Major Contributors](<CONTRIBUTORS.md>)
