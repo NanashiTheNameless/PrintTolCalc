@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  test-and-format:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,7 +34,7 @@ jobs:
         run: tox
 
   check-formatting:
-    needs: test-and-format
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -58,27 +58,15 @@ jobs:
       - name: Run format check
         run: tox -e format
 
-      - name: Check for formatting changes
-        id: format_changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet; then
-            echo "CHANGES=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "CHANGES=false" >> "$GITHUB_OUTPUT"
-          fi
+      - name: Extract short SHA
+        id: vars
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Create PR for formatting fixes
-        if: steps.format_changes.outputs.CHANGES == 'true'
-        run: |
-          BRANCH=fix/format-$(date +%s)
-          git checkout -b "$BRANCH"
-          git add .
-          git commit -m "Auto-format code using tox"
-          git push origin "$BRANCH"
-          gh pr create --title "Auto-format code using tox" \
-                       --body "This PR applies formatting fixes from tox." \
-                       --base main --head "$BRANCH"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/create-pull-request@a59c52d55daab9f6a666e8741848b3cf101395a7
+        with:
+          commit-message: Auto-format code using tox.
+          branch: fix/format
+          title: Auto-format code using tox.
+          body: This PR applies formatting fixes from tox.
+          base: main
