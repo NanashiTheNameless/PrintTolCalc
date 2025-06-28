@@ -1,5 +1,6 @@
+#!/usr/bin/python3
+
 import argparse
-from .tolerance import calculate_tolerance
 
 try:
     from importlib.metadata import version, PackageNotFoundError
@@ -7,9 +8,17 @@ except ImportError:
     from importlib_metadata import version, PackageNotFoundError
 
 try:
-    __version__ = version("PrintTolTest")
+    __version__ = version("PrintTolCalc")
 except PackageNotFoundError:
     __version__ = "STANDALONE"
+
+def calculate_tolerance(expected, measured):
+    tolerances = {}
+    for axis, e, m in zip(["X", "Y", "Z"], expected, measured):
+        signed = ((m - e) / e) * 100
+        absolute = abs(signed)
+        tolerances[axis] = {"signed": signed, "absolute": absolute}
+    return tolerances
 
 
 def prompt_for_dimensions(label):
@@ -22,13 +31,13 @@ def prompt_for_dimensions(label):
 
 def main():
     parser = argparse.ArgumentParser(
-        description=f"PrintTolTest {__version__} - Calculate 3D print dimensional tolerance.",
+        description=f"PrintTolCalc {__version__} - Calculate 3D print dimensional tolerance.",
         epilog=f"""
 Examples:
-  PrintTolTest
+  PrintTolCalc
     → Interactive mode, will prompt for expected/measured dimensions.
 
-  PrintTolTest --expected 20 20 20 --measured 19.99 19.95 20.10
+  PrintTolCalc --expected 20 20 20 --measured 19.99 19.95 20.10
     → Command-line mode, pass dimensions directly.
 
 All dimensions must be in millimeters (mm).

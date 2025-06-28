@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-
 import argparse
+from .tolerance import calculate_tolerance
 
 try:
     from importlib.metadata import version, PackageNotFoundError
@@ -11,14 +10,6 @@ try:
     __version__ = version("PrintTolCalc")
 except PackageNotFoundError:
     __version__ = "STANDALONE"
-
-def calculate_tolerance(expected, measured):
-    tolerances = {}
-    for axis, e, m in zip(["X", "Y", "Z"], expected, measured):
-        signed = ((m - e) / e) * 100
-        absolute = abs(signed)
-        tolerances[axis] = {"signed": signed, "absolute": absolute}
-    return tolerances
 
 
 def prompt_for_dimensions(label):

@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "PrintTolTest"
+name = "PrintTolCalc"
 version = "0.2.3.0"
 description = "A simple CLI tool to calculate 3D print dimensional tolerance."
 readme = "README.md"
@@ -34,13 +34,13 @@ classifiers = [
 ]
 
 [project.scripts]
-PrintTolTest = "PrintTolTest.cli:main"
+PrintTolCalc = "PrintTolCalc.cli:main"
 
 [tool.setuptools]
 license-files = ["LICENSE.md"]
 
 [project.urls]
-Download = "https://github.com/NanashiTheNameless/PrintTolTest/releases/latest"
-Homepage = "https://github.com/NanashiTheNameless/PrintTolTest"
+Download = "https://github.com/NanashiTheNameless/PrintTolCalc/releases/latest"
+Homepage = "https://github.com/NanashiTheNameless/PrintTolCalc"
 GitHub-Sponsor = "https://github.com/sponsors/NanashiTheNameless"
 BuyMeACoffee = "https://buymeacoffee.com/NamelessNanashi"
