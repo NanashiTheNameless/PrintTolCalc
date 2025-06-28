@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "PrintTolTest"
-version = "0.2.0"
+version = "0.2.1"
 description = "A simple CLI tool to calculate 3D print dimensional tolerance."
 readme = "README.md"
 license = { text = "OQL-1.2" }
