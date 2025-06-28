@@ -8,7 +8,7 @@ version = "0.3.1.0"
 description = "PrintTolCalc - A simple CLI tool to calculate 3D print dimensional tolerance."
 readme = "README.md"
 license = { text = "OQL-1.2" }
-requires-python = ">=3"
+requires-python = ">=3.5"
 
 authors = [
     { name = "NanashiTheNameless" },
@@ -25,10 +25,6 @@ classifiers = [
     "Natural Language :: English",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.1",
-    "Programming Language :: Python :: 3.2",
-    "Programming Language :: Python :: 3.3",
-    "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
