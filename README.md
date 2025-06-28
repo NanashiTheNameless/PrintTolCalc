@@ -12,14 +12,10 @@ It does have issues and is not a perfect representation of printer performance.
 Get the Latest
 
 ```sh
-python3 -m pip install --upgrade 'PrintTolTest @ git+https://github.com/NanashiTheNameless/PrintTolTest@main'
+pipx install --force 'PrintTolTest @ git+https://github.com/NanashiTheNameless/PrintTolTest@main'
 ```
 
 Or get from [PyPi](<https://pypi.org/project/PrintTolTest/>) (not recommended, may be out of date)
-
-```sh
-python3 -m pip install --upgrade PrintTolTest
-```
 
 ## Get started
 
