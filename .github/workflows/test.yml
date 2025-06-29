@@ -22,14 +22,17 @@ jobs:
       - name: Parse manifest for desired versions
         id: set-matrix
         run: |
-          versions=$(
-            jq -r '[.[]
-              | select(.version | test("^3\\.(8|9|10|11|12|13)$") 
-                or test("^3\\.14")
-                or test("^3\\.15"))
-              | .version] | unique' manifest.json
-          )
-          echo "matrix=$(jq -n --argjson versions "$versions" '{python-version: $versions}')" >> "$GITHUB_OUTPUT"
+          versions=$(jq -r '[.[]
+            | select(.version | test("^3\\.(8|9|10|11|12|13)$")
+              or test("^3\\.14")
+              or test("^3\\.15"))
+            | .version] | unique' manifest.json)
+
+          echo "{\"python-version\": $versions}" > matrix.json
+
+          matrix=$(cat matrix.json)
+          echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
+
 
   test:
     needs: get-python-versions
