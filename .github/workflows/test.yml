@@ -47,7 +47,7 @@ jobs:
 
       - name: Run tox
         if: steps.setup.outcome == 'success'
-        run: tox
+        run: tox --verbose --recreate
 
   check-formatting:
     needs: test
@@ -71,8 +71,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox tox-gh-actions
 
+      - name: Run tox
+        run: tox --verbose --recreate
+
+      - name: Run lint check
+        run: tox --verbose --recreate -e lint
+
       - name: Run format check
-        run: tox -e format
+        run: tox --verbose --recreate -e format
 
       - name: Extract short SHA
         id: vars
