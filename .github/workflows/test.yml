@@ -10,11 +10,32 @@ permissions:
   pull-requests: write
 
 jobs:
+
+  get-python-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Fetch latest versions-manifest.json
+        run: curl -sSL -o manifest.json https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+
+      - name: Parse manifest for desired versions
+        id: set-matrix
+        run: |
+          versions=$(
+            jq -r '[.[]
+              | select(.version | test("^3\\.(8|9|10|11|12|13)$")
+                or test("^3\\.14.*")
+                or test("^3\\.15.*"))
+              | .version] | unique' manifest.json
+          )
+          echo "matrix=$(jq -n --argjson versions "$versions" '{python-version: $versions}')" >> "$GITHUB_OUTPUT"
+
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
+        python-version: ${{fromJson(needs.get-python-versions.outputs.matrix)}}
 
     steps:
       - name: Checkout repo
