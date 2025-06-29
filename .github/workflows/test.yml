@@ -20,10 +20,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - name: Try to set up Python ${{ matrix.python-version }}
+        id: setup
+        continue-on-error: true
+        uses: actions/setup-python@e9c40fbc2bf309799101412f178fe3064ebb27ac
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Skip test if Python version not available
+        if: steps.setup.outcome == 'failure'
+        run: echo "Python ${{ matrix.python-version }} is not available. Skipping."
 
       - name: Upgrade pip and install tox
         run: |
