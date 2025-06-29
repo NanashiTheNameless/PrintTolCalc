@@ -1,7 +1,6 @@
 import pytest
 from PrintTolCalc.tolerance import calculate_tolerance
 
-
 def test_perfect_match():
     expected = (20, 20, 20)
     measured = (20, 20, 20)
@@ -9,7 +8,6 @@ def test_perfect_match():
     for axis in ["X", "Y", "Z"]:
         assert result[axis]["signed"] == pytest.approx(0.0)
         assert result[axis]["absolute"] == pytest.approx(0.0)
-
 
 def test_negative_deviation():
     expected = (20, 20, 20)
