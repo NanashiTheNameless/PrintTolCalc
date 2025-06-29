@@ -1,5 +1,6 @@
 import argparse
 from .tolerance import calculate_tolerance
+
 try:
     from importlib.metadata import version, PackageNotFoundError
 except ImportError:
@@ -74,5 +75,7 @@ All dimensions must be in millimeters (mm).
         print(
             f"{axis}-axis: Signed = {sign_prefix}{signed:.3f}%, Absolute = {absolute:.3f}%"
         )
+
+
 if __name__ == "__main__":
     main()
