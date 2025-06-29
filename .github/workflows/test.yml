@@ -20,27 +20,32 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
 
-      - name: Try to set up Python ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
         id: setup
         continue-on-error: true
         uses: actions/setup-python@e9c40fbc2bf309799101412f178fe3064ebb27ac
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Skip test if Python version not available
-        if: steps.setup.outcome == 'failure'
-        run: echo "Python ${{ matrix.python-version }} is not available. Skipping."
+      - name: Log Python setup result
+        run: |
+          if [ "${{ steps.setup.outcome }}" != "success" ]; then
+            echo "Python ${{ matrix.python-version }} is not available. Skipping job steps."
+          fi
 
       - name: Upgrade pip and install tox
+        if: steps.setup.outcome == 'success'
         run: |
           sudo apt-get update
           sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
             libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-            libncurses5-dev libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+            libncurses5-dev libncursesw5-dev xz-utils tk-dev libxml2-dev \
+            libxmlsec1-dev libffi-dev liblzma-dev
           python -m pip install --upgrade pip
           pip install tox tox-gh-actions
 
       - name: Run tox
+        if: steps.setup.outcome == 'success'
         run: tox
 
   check-formatting:
