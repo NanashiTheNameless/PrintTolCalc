@@ -2,20 +2,14 @@
 
 import argparse
 
-try:
-    from importlib.metadata import version, PackageNotFoundError
-except ImportError:
-    from importlib_metadata import version, PackageNotFoundError
-
-try:
-    __version__ = version("PrintTolCalc")
-except PackageNotFoundError:
-    __version__ = "STANDALONE"
-
 
 def calculate_tolerance(expected, measured):
     tolerances = {}
     for axis, e, m in zip(["X", "Y", "Z"], expected, measured):
+        if e == 0:
+            raise ValueError(f"Expected value for {axis}-axis cannot be zero.")
+        if e < 0:
+            raise ValueError(f"Expected value for {axis}-axis cannot be negative.")
         signed = ((m - e) / e) * 100
         absolute = abs(signed)
         tolerances[axis] = {"signed": signed, "absolute": absolute}
@@ -24,15 +18,15 @@ def calculate_tolerance(expected, measured):
 
 def prompt_for_dimensions(label):
     print(f"\nEnter {label} dimensions (in mm):")
-    x = float(input("  X: "))
-    y = float(input("  Y: "))
-    z = float(input("  Z: "))
+    x = float(input(" X: "))
+    y = float(input(" Y: "))
+    z = float(input(" Z: "))
     return (x, y, z)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description=f"PrintTolCalc {__version__} - Calculate 3D print dimensional tolerance.",
+        description="PrintTolCalc CLI STANDALONE - Calculate 3D print dimensional tolerance.",
         epilog="""
 Examples:
   PrintTolCalc
@@ -46,7 +40,7 @@ All dimensions must be in millimeters (mm).
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
-        "--version", action="version", version=f"%(prog)s {__version__}"
+        "--version", action="version", version="PrintTolCalc.Standalone.py STANDALONE"
     )
     parser.add_argument(
         "--expected",
