@@ -10,16 +10,12 @@ try:
     __version__ = version("PrintTolCalc")
 except PackageNotFoundError:
     __version__ = "STANDALONE"
-
-
 def prompt_for_dimensions(label):
     print(f"\nEnter {label} dimensions (in mm):")
     x = float(input(" X: "))
     y = float(input(" Y: "))
     z = float(input(" Z: "))
     return (x, y, z)
-
-
 def main():
     parser = argparse.ArgumentParser(
         description=f"PrintTolCalc CLI {__version__} - Calculate 3D print dimensional tolerance.",

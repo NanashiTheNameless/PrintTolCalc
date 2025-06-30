@@ -91,5 +91,7 @@ jobs:
           commit-message: Auto-format code using tox.
           branch: fix-format-${{ steps.vars.outputs.sha_short }}
           title: Auto-format code using tox.
-          body: This PR applies formatting fixes from tox.
+          body: |
+            This PR applies formatting fixes from tox.
+            ${{ github.event_name == 'workflow_dispatch' && 'Triggered manually' || format('Triggered by \"{0}\" {1}', github.event.head_commit.message, github.event.head_commit.url) }}
           base: main
