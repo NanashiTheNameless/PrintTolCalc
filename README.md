@@ -9,6 +9,15 @@ It is worthy to note this is more for testing your print consistency (and lets b
 Testing in this way is not an end-all be-all solution,
 It does have issues and is not a perfect representation of printer performance.
 
+I realize this code "may be"(read: "is") bad but I don't care it's a sideproject for fun anyways, Don't take it too seriously!
+
+## License
+
+This is licensed under "OQL-1.2" found at [LICENSE.md](<https://github.com/NanashiTheNameless/PrintTolCalc/blob/main/LICENSE.md>).
+Please ensure you are compliant with the license before using this project!
+
+(Thank you [Avaris/Andrea Vos](<https://avris.it/>) for making an amazing license for all to use)
+
 ## Installation
 
 Get the Latest

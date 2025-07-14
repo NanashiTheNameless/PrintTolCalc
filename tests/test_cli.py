@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LicenseRef-OQL-1.2
+
 import sys
 from unittest import mock
 from PrintTolCalc import cli

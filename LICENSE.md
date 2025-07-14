@@ -1,3 +1,11 @@
+# License
+
+SPDX-License-Identifier: LicenseRef-OQL-1.2
+
+This project is licensed under the Opinionated Queer License v1.2 (OQL-1.2)
+
+## Full License Text
+
 # 🏳️‍🌈 Opinionated Queer License v1.2
 
 © Copyright [NamelessNanashi](<https://git.NamelessNanashi.dev/>)

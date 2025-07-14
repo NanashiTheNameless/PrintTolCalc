@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LicenseRef-OQL-1.2
+
 import argparse
 from .tolerance import calculate_tolerance
 

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: LicenseRef-OQL-1.2
+
+
 def calculate_tolerance(expected, measured):
     tolerances = {}
     for axis, e, m in zip(["X", "Y", "Z"], expected, measured):

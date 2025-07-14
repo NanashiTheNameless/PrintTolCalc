@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LicenseRef-OQL-1.2
+
 import subprocess
 import sys
 
