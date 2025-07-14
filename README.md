@@ -14,6 +14,7 @@ I realize this code "may be"(read: "is") bad but I don't care it's a sideproject
 ## License
 
 This is licensed under "OQL-1.2" found at [LICENSE.md](<https://github.com/NanashiTheNameless/PrintTolCalc/blob/main/LICENSE.md>).
+
 Please ensure you are compliant with the license before using this project!
 
 (Thank you [Avaris/Andrea Vos](<https://avris.it/>) for making an amazing license for all to use)
