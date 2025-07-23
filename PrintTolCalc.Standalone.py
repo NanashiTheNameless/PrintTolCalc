@@ -96,10 +96,11 @@ def calculate_tolerance(expected, measured):
                     return len(s.split(".")[1])
             return 0
 
-        if decimal_places(e) > 3 or decimal_places(m) > 3:
+        if decimal_places(e) > 2 or decimal_places(m) > 2:
             print(
-                f"Warning: {label.capitalize()} value for {axis}-axis input has more than 3 decimal places. "
-                f"This is not recommended for accuracy reasons."
+                f"Warning: {label.capitalize()} value for {axis}-axis input has more than 2 decimal places. "
+                f"This is not recommended for floating point accuracy reasons. "
+                f"Decimal places after the second are only handled in the percentage calculation and may be inaccurate."
             )
 
         signed = ((float(m) - float(e)) / float(e)) * 100
