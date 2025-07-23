@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 # SPDX-License-Identifier: LicenseRef-OQL-1.2
 #
 # This project is licensed under the Opinionated Queer License v1.2 (OQL-1.2)
@@ -65,18 +64,48 @@
 # under any kind of legal claim as far as the law allows.
 
 import argparse
+import math
 
 
 def calculate_tolerance(expected, measured):
     tolerances = {}
+
     for axis, e, m in zip(["X", "Y", "Z"], expected, measured):
-        if e == 0:
-            raise ValueError(f"Expected value for {axis}-axis cannot be zero.")
-        if e < 0:
-            raise ValueError(f"Expected value for {axis}-axis cannot be negative.")
-        signed = ((m - e) / e) * 100
+        for label, value in [("expected", e), ("measured", m)]:
+            if math.isnan(value):
+                raise ValueError(
+                    f"{label.capitalize()} value for {axis}-axis cannot be NaN."
+                )
+            if math.isinf(value):
+                raise ValueError(
+                    f"{label.capitalize()} value for {axis}-axis cannot be infinite."
+                )
+            if value == 0:
+                raise ValueError(
+                    f"{label.capitalize()} value for {axis}-axis cannot be zero."
+                )
+            if value < 0:
+                raise ValueError(
+                    f"{label.capitalize()} value for {axis}-axis cannot be negative."
+                )
+
+        def decimal_places(n):
+            if isinstance(n, float):
+                s = f"{n:.10f}".rstrip("0")
+                if "." in s:
+                    return len(s.split(".")[1])
+            return 0
+
+        if decimal_places(e) > 3 or decimal_places(m) > 3:
+            print(
+                f"Warning: {label.capitalize()} value for {axis}-axis input has more than 3 decimal places. "
+                f"This is not recommended for accuracy reasons."
+            )
+
+        signed = ((float(m) - float(e)) / float(e)) * 100
         absolute = abs(signed)
         tolerances[axis] = {"signed": signed, "absolute": absolute}
+
     return tolerances
 
 
@@ -126,7 +155,7 @@ All dimensions must be in millimeters (mm).
     expected = args.expected if args.expected else prompt_for_dimensions("expected")
     measured = args.measured if args.measured else prompt_for_dimensions("measured")
 
-    tolerances = calculate_tolerance(expected, measured)
+    tolerances = calculate_tolerance(tuple(expected), tuple(measured))
 
     print("\n3D Print Tolerance Report:")
     print(f"Ideal X dimension (mm): {expected[0]:.2f}")

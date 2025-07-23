@@ -43,6 +43,44 @@ def test_mixed_deviation():
 @pytest.mark.parametrize(
     "index,axis,bad_value,expected_message",
     [
+        (0, "X", float("nan"), "Expected value for X-axis cannot be NaN."),
+        (1, "Y", float("nan"), "Expected value for Y-axis cannot be NaN."),
+        (2, "Z", float("nan"), "Expected value for Z-axis cannot be NaN."),
+        (0, "X", float("inf"), "Expected value for X-axis cannot be infinite."),
+        (1, "Y", float("inf"), "Expected value for Y-axis cannot be infinite."),
+        (2, "Z", float("inf"), "Expected value for Z-axis cannot be infinite."),
+    ],
+)
+def test_invalid_expected_nan_inf(index, axis, bad_value, expected_message):
+    expected = [20, 20, 20]
+    measured = [20, 20, 20]
+    expected[index] = bad_value
+    with pytest.raises(ValueError, match=expected_message):
+        calculate_tolerance(tuple(expected), tuple(measured))
+
+
+@pytest.mark.parametrize(
+    "index,axis,bad_value,expected_message",
+    [
+        (0, "X", float("nan"), "Measured value for X-axis cannot be NaN."),
+        (1, "Y", float("nan"), "Measured value for Y-axis cannot be NaN."),
+        (2, "Z", float("nan"), "Measured value for Z-axis cannot be NaN."),
+        (0, "X", float("inf"), "Measured value for X-axis cannot be infinite."),
+        (1, "Y", float("inf"), "Measured value for Y-axis cannot be infinite."),
+        (2, "Z", float("inf"), "Measured value for Z-axis cannot be infinite."),
+    ],
+)
+def test_invalid_measured_nan_inf(index, axis, bad_value, expected_message):
+    expected = [20, 20, 20]
+    measured = [20, 20, 20]
+    measured[index] = bad_value
+    with pytest.raises(ValueError, match=expected_message):
+        calculate_tolerance(tuple(expected), tuple(measured))
+
+
+@pytest.mark.parametrize(
+    "index,axis,bad_value,expected_message",
+    [
         (0, "X", 0, "Expected value for X-axis cannot be zero."),
         (1, "Y", 0, "Expected value for Y-axis cannot be zero."),
         (2, "Z", 0, "Expected value for Z-axis cannot be zero."),
@@ -55,6 +93,24 @@ def test_invalid_expected_values(index, axis, bad_value, expected_message):
     expected = [20, 20, 20]
     measured = [20, 20, 20]
     expected[index] = bad_value
+    with pytest.raises(ValueError, match=expected_message):
+        calculate_tolerance(tuple(expected), tuple(measured))
 
+
+@pytest.mark.parametrize(
+    "index,axis,bad_value,expected_message",
+    [
+        (0, "X", 0, "Measured value for X-axis cannot be zero."),
+        (1, "Y", 0, "Measured value for Y-axis cannot be zero."),
+        (2, "Z", 0, "Measured value for Z-axis cannot be zero."),
+        (0, "X", -1, "Measured value for X-axis cannot be negative."),
+        (1, "Y", -1, "Measured value for Y-axis cannot be negative."),
+        (2, "Z", -1, "Measured value for Z-axis cannot be negative."),
+    ],
+)
+def test_invalid_measured_values(index, axis, bad_value, expected_message):
+    expected = [20, 20, 20]
+    measured = [20, 20, 20]
+    measured[index] = bad_value
     with pytest.raises(ValueError, match=expected_message):
         calculate_tolerance(tuple(expected), tuple(measured))

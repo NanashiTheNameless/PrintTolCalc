@@ -60,7 +60,7 @@ All dimensions must be in millimeters (mm).
     expected = args.expected if args.expected else prompt_for_dimensions("expected")
     measured = args.measured if args.measured else prompt_for_dimensions("measured")
 
-    tolerances = calculate_tolerance(expected, measured)
+    tolerances = calculate_tolerance(tuple(expected), tuple(measured))
 
     print("\n3D Print Tolerance Report:")
     print(f"Ideal X dimension (mm): {expected[0]:.2f}")
