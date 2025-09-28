@@ -30,7 +30,7 @@ Examples:
   PrintTolCalc
     → Interactive mode, will prompt for expected/measured dimensions.
 
-  PrintTolCalc --expected 20 20 20 --measured 19.99 19.95 20.10
+  PrintTolCalc --expected 30 30 30 --measured 29.99 30.01 30.04
     → Command-line mode, pass dimensions directly.
 
 All dimensions must be in millimeters (mm).
@@ -45,14 +45,14 @@ All dimensions must be in millimeters (mm).
         type=float,
         nargs=3,
         metavar=("X", "Y", "Z"),
-        help="Expected dimensions in mm (e.g. --expected 20 20 20)",
+        help="Expected dimensions in mm (e.g. --expected 30 30 30)",
     )
     parser.add_argument(
         "--measured",
         type=float,
         nargs=3,
         metavar=("X", "Y", "Z"),
-        help="Measured dimensions in mm (e.g. --measured 19.99 19.95 20.10)",
+        help="Measured dimensions in mm (e.g. --measured 29.99 30.01 30.04)",
     )
 
     args = parser.parse_args()
