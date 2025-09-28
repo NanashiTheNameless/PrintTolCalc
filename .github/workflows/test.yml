@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
       - name: Set up Python ${{ matrix.python-version }}
         id: setup
         continue-on-error: true
-        uses: actions/setup-python@36da51d563b70a972897150555bb025096d65565
+        uses: actions/setup-python@2e3e4b15a884dc73a63f962bff250a855150a234
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -55,10 +55,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@8edcb1bdb4e267140fa742c62e395cd74f332709
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
 
       - name: Set up Python
-        uses: c
+        uses: actions/setup-python@2e3e4b15a884dc73a63f962bff250a855150a234
         with:
           python-version: '3.13'
 
