@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "PrintTolCalc"
-version = "0.3.2.2"
+version = "0.3.2.3"
 description = "PrintTolCalc - A simple CLI tool to calculate 3D print dimensional tolerance."
 readme = "README.md"
 license = { text = "LicenseRef-OQL-1.3" }
@@ -23,6 +23,8 @@ maintainers = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
