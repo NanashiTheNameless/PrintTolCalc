@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-OQL-1.3
 
 import pytest
+
 from PrintTolCalc.tolerance import calculate_tolerance
 
 
