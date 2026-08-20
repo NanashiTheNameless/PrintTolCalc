@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: LicenseRef-OQL-1.3
 
+import subprocess
 import sys
 from unittest import mock
-from PrintTolCalc import cli
+
 import pytest
-import subprocess
+
+from PrintTolCalc import cli
 
 
 def test_cli_runs_without_error(capsys):
